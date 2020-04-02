@@ -15,13 +15,12 @@ class CreateDonasisTable extends Migration
     {
       
         Schema::create('donasis', function (Blueprint $table) {
-           $table->increments('id');
-            $table->string('id_donasi');
-            $table->string('id_jenis_donasi');
-            $table->string('id_donatur');
-            $table->string('id_kegiatan');
+           $table->bigIncrements('id_donasi');
+            $table->bigInteger('id_jenis_donasi')->references('id_jenis_donasi')->on('jenis_donasis');
+            $table->bigInteger('id_donatur')->references('id_donatur')->on('donaturs');
+            $table->bigInteger('id_kegiatan')->references('id_kegiatan')->on('kegiatans');
             $table->date('tgl_donasi');
-            $table->string('nominal');
+            $table->integer('nominal');
             $table->timestamps();
         });
     }

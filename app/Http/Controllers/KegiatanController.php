@@ -25,9 +25,9 @@ class KegiatanController extends Controller
     public function create(request $request)
     {
         $kegiatan= new kegiatan;
-        $kegiatan->id_kegiatan=$request->id_kegiatan;
-        $kegiatan->id_donasi=$request->id_donasi;
-        $kegiatan->id_peserta=$request->id_peserta;
+        // $kegiatan->id_kegiatan=$request->id_kegiatan;
+        // $kegiatan->id_donasi=$request->id_donasi;
+        // $kegiatan->id_donatur=$request->id_donatur;
         $kegiatan->tempat_kegiatan=$request->tempat_kegiatan;
         $kegiatan->nama_kegiatan=$request->nama_kegiatan;
         $kegiatan->tgl_kegiatan=$request->tgl_kegiatan;
@@ -80,9 +80,9 @@ class KegiatanController extends Controller
     {
         
         $kegiatan= kegiatan::find($id);
-        $kegiatan->id_kegiatan = $request->get('id_kegiatan');
-        $kegiatan->id_donasi = $request->get('id_donasi');
-        $kegiatan->id_peserta = $request->get('id_peserta');
+        // $kegiatan->id_kegiatan = $request->get('id_kegiatan');
+        // $kegiatan->id_donasi = $request->get('id_donasi');
+        // $kegiatan->id_donatur = $request->get('id_donatur');
         $kegiatan->nama_kegiatan = $request->get('nama_kegiatan');
         $kegiatan->tempat_kegiatan = $request->get('tempat_kegiatan');
         $kegiatan->tgl_kegiatan = $request->get('tgl_kegiatan');

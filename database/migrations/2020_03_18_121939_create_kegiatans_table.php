@@ -14,10 +14,11 @@ class CreateKegiatansTable extends Migration
     public function up()
     {
         Schema::create('kegiatans', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('id_kegiatan');
+           
+            $table->bigIncrements('id_kegiatan');
+            //$table->bigInteger('id_jenis_donatur')->references('id_jenis_donatur')->on('jenis_donaturs');
             $table->string('id_donasi');
-            $table->string('id_peserta');
+            $table->bigInteger('id_donatur')->references('id_donatur')->on('donaturs');
             $table->string('nama_kegiatan');
             $table->string('tempat_kegiatan');
             $table->date('tgl_kegiatan');

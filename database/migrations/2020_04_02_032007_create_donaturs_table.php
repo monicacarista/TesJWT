@@ -14,13 +14,13 @@ class CreateDonatursTable extends Migration
     public function up()
     {
         Schema::create('donaturs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('id_donatur');
+            $table->bigIncrements('id_donatur');
+            $table->bigInteger('id_jenis_donatur')->references('id_jenis_donatur')->on('jenis_donaturs');
             $table->string('nama_donatur');
-            $table->string('id_jenis_donatur');
             $table->string('jenis_kelamin');
             $table->string('no_hp');
             $table->string('alamat_donatur');
+            $table->string('email_donatur')->unique();
             $table->timestamps();
         });
     }

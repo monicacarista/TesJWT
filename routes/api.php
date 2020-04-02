@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 //route CRUD Peserta
 Route::get('/donatur','DonaturController@index');
 Route::post('/postdonatur','DonaturController@create');
-Route::post('/donatur/{id}','DonaturController@update');
+Route::post('/donatur/{id_donatur}','DonaturController@update');
 Route::delete('/donatur/{id}','DonaturController@delete');
 
 //route CRUD Donasi

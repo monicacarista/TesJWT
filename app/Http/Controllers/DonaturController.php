@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\donatur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DonaturController extends Controller
 {
@@ -25,12 +26,11 @@ class DonaturController extends Controller
     public function create(request $request)
     {
         $donatur = new Donatur;
-        $donatur->id_donatur=$request->id_donatur;
         $donatur->nama_donatur = $request->nama_donatur;
-        $donatur->id_jenis_donatur = $request->id_jenis_donatur;
         $donatur->jenis_kelamin = $request->jenis_kelamin;
         $donatur->no_hp = $request->no_hp;
         $donatur->alamat_donatur = $request->alamat_donatur;
+        $donatur->email_donatur = $request->email_donatur;
         
         $donatur->save();
 
@@ -78,22 +78,34 @@ class DonaturController extends Controller
      * @param  \App\donatur  $donatur
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $id)
+    public function update(Request $request, $id_donatur)
     {
-        $donatur = Donatur::find($id);
-     //   $jenis_donatur->id_jenis_donatur = $request->get('id_jenis_donatur');
-        $donatur->id_donatur=$request->get('id_donatur');
-        $donatur->nama_donatur=$request->get('nama_donatur');
-        $donatur->id_jenis_donatur=$request->get('id_jenis_donatur');
-        $donatur->jenis_kelamin=$request->get('jenis_kelamin');
-        $donatur->no_hp=$request->get('no_hp');
-        $donatur->alamat_donatur=$request->get('alamat_donatur');
-        $donatur->save(); 
+        // $donatur = Donatur::find($id_donatur);
+        // $donatur->nama_donatur=$request->get('nama_donatur');
+        // $donatur->jenis_kelamin=$request->get('jenis_kelamin');
+        // $donatur->no_hp=$request->get('no_hp');
+        // $donatur->alamat_donatur=$request->get('alamat_donatur');
+        // $donatur->email_donatur=$request->get('email_donatur');
+        // $donatur->save(); 
 
-        return response()->json(compact('donatur'));
+        // return response()->json(compact('donatur'));
+        $data = DB::table('donaturs')->where('id_donatur', $id_donatur)->update([
+            'nama_donatur'=>$request->nama_donatur,
+            'jenis_kelamin'=>$request->jenis_kelamin,
+            'no_hp'=>$request->no_hp,
+             'alamat_donatur'=>$request->alamat_donatur,
+             'email_donatur'=>$request->email_donatur,
+        ]);
+        return response()->json([
+            'nama_donatur'=>$request->nama_donatur,
+            'jenis_kelamin'=>$request->jenis_kelamin,
+            'no_hp'=>$request->no_hp,
+             'alamat_donatur'=>$request->alamat_donatur,
+             'email_donatur'=>$request->email_donatur,
+        ],200);
     }
-    public function delete( $id){
-        $donatur=Donatur::find($id);
+    public function delete( $id_donatur){
+        $donatur=Donatur::find($id_donatur);
         $donatur->delete();
    
         return "data berhasil dihapus";

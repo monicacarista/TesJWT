@@ -27,10 +27,10 @@ class DonasiController extends Controller
     {
         $donasi = new Donasi;
      
-        $donasi ->id_donasi = $request->id_donasi;
-        $donasi ->id_jenis_donasi = $request->id_jenis_donasi;
-        $donasi ->id_donatur= $request->id_donatur;
-        $donasi ->id_kegiatan= $request->id_kegiatan;
+        // $donasi ->id_donasi = $request->id_donasi;
+        // $donasi ->id_jenis_donasi = $request->id_jenis_donasi;
+        // $donasi ->id_donatur= $request->id_donatur;
+        // $donasi ->id_kegiatan= $request->id_kegiatan;
         $donasi ->tgl_donasi = $request->tgl_donasi;
         $donasi ->nominal = $request->nominal;
         $donasi->save();
@@ -84,10 +84,10 @@ class DonasiController extends Controller
     {
      //$jenis_donatur->id_jenis_donatur=$request->id_jenis_donatur;
      $donasi= Donasi::find($id);
-     $donasi->id_donasi = $id_donasi;
-     $donasi->id_jenis_donasi = $id_jenis_donasi;
-     $donasi->id_donatur = $id_donatur;
-     $donasi->id_kegiatan = $id_kegiatan;
+    //  $donasi->id_donasi = $id_donasi;
+    //  $donasi->id_jenis_donasi = $id_jenis_donasi;
+    //  $donasi->id_donatur = $id_donatur;
+    //  $donasi->id_kegiatan = $id_kegiatan;
      $donasi->tgl_donasi = $tgl_donasi;
      $donasi->nominal = $nominal;
      $donasi->save();

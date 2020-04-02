@@ -25,7 +25,7 @@ class JenisDonasiController extends Controller
     public function create(request $request)
     {
         $jenis_donasi= new jenis_donasi;
-        $jenis_donasi->id_jenis_donasi=$request->id_jenis_donasi;
+       // $jenis_donasi->id_jenis_donasi=$request->id_jenis_donasi;
         $jenis_donasi->nama_jenis_donasi=$request->nama_jenis_donasi;
         $jenis_donasi->save();
         return response()->json(compact('jenis_donasi'));

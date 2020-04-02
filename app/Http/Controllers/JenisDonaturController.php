@@ -25,7 +25,7 @@ class JenisDonaturController extends Controller
     public function create(request $request)
     {
         $jenis_donatur= new jenis_donatur;
-        $jenis_donatur->id_jenis_donatur=$request->id_jenis_donatur;
+       
         $jenis_donatur->nama_jenis_donatur=$request->nama_jenis_donatur;
         $jenis_donatur->save();
         return response()->json(compact('jenis_donatur'));
@@ -45,7 +45,7 @@ class JenisDonaturController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\jenis_donatur  $jenis_donatur
+     * @param  \App\jenis_donatur $jenis_donatur
      * @return \Illuminate\Http\Response
      */
     public function show(jenis_donatur $jenis_donatur)
@@ -71,22 +71,23 @@ class JenisDonaturController extends Controller
      * @param  \App\jenis_donatur  $jenis_donatur
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(request $request, $id_jenis_donatur)
     {
-        $jenis_donatur= jenis_donatur::find($id);
-        $jenis_donatur->id_jenis_donatur = $request->get('id_jenis_donatur');
-         $jenis_donatur->nama_jenis_donatur = $request->get('nama_jenis_donatur');
-         $jenis_donatur->save();
-         
+        $jenis_donatur= jenis_donatur::find($id_jenis_donatur);
+    
+        $jenis_donatur->nama_jenis_donatur = $request->get('nama_jenis_donatur');
+        $jenis_donatur->save();
+
+
+
         return response()->json(compact('jenis_donatur'));
     }
-    public function delete($id){
-        $jenis_donatur= jenis_donatur::find($id);
+    public function delete($id_jenis_donatur){
+        $jenis_donatur= jenis_donatur::find($id_jenis_donatur);
         $jenis_donatur->delete();
 
         return"data berhasil dihapus";
     }
-
     /**
      * Remove the specified resource from storage.
      *
