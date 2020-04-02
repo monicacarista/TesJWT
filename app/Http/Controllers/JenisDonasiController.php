@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\jenis_donasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class JenisDonasiController extends Controller
 {
@@ -76,15 +77,13 @@ class JenisDonasiController extends Controller
     //    $id_jenis_donasi = $request->id_jenis_donasi;
     //    $nama_jenis_donasi = $request->nama_jenis_donasi;
 
-        $jenis_donasi= jenis_donasi::find($id);
-        $jenis_donasi->id_jenis_donasi = $request->get('id_jenis_donasi');
-        $jenis_donasi->nama_jenis_donasi = $request->get('nama_jenis_donasi');
-        $jenis_donasi->save();
-
-
-
-        return response()->json(compact('jenis_donasi'));
-    }
+    $data = DB::table('jenis_donasis')->where('id_jenis_donasi', $id_jenis_donasi)->update([
+        'nama_jenis_donasi'=>$request->nama_jenis_donasi,
+    ]);
+    return response()->json([
+        'nama_jenis_donasi'=>$request->nama_jenis_donasi,
+    ],200);
+}
 
     public function delete($id){
         $jenis_donasi= jenis_donasi::find($id);

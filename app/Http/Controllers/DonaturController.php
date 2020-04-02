@@ -105,10 +105,9 @@ class DonaturController extends Controller
         ],200);
     }
     public function delete( $id_donatur){
-        $donatur=Donatur::find($id_donatur);
-        $donatur->delete();
-   
-        return "data berhasil dihapus";
+        $blog = DB::table('donaturs')->where('id_donatur',$id_donatur)->delete();
+
+    return "data berhasil dihapus";
        }
     /**
      * Remove the specified resource from storage.

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\jenis_donatur;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class JenisDonaturController extends Controller
@@ -73,10 +74,13 @@ class JenisDonaturController extends Controller
      */
     public function update(request $request, $id_jenis_donatur)
     {
-        $jenis_donatur= jenis_donatur::find($id_jenis_donatur);
-    
-        $jenis_donatur->nama_jenis_donatur = $request->get('nama_jenis_donatur');
-        $jenis_donatur->save();
+        $data = DB::table('jenis_donaturs')->where('id_jenis_donatur', $id_jenis_donatur)->update([
+            'nama_jenis_donatur'=>$request->nama_jenis_donatur,
+        ]);
+        return response()->json([
+            'nama_jenis_donatur'=>$request->nama_jenis_donatur,
+            
+        ],200);
 
 
 
