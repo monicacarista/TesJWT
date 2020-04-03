@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\kegiatan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KegiatanController extends Controller
 {
@@ -76,28 +77,35 @@ class KegiatanController extends Controller
      * @param  \App\kegiatan  $kegiatan
      * @return \Illuminate\Http\Response
      */
-    public function update(request $request, $id)
+    public function update(request $request, $id_kegiatan)
     {
         
-        $kegiatan= kegiatan::find($id);
+        //$kegiatan= kegiatan::find($id);
         // $kegiatan->id_kegiatan = $request->get('id_kegiatan');
         // $kegiatan->id_donasi = $request->get('id_donasi');
         // $kegiatan->id_donatur = $request->get('id_donatur');
-        $kegiatan->nama_kegiatan = $request->get('nama_kegiatan');
-        $kegiatan->tempat_kegiatan = $request->get('tempat_kegiatan');
-        $kegiatan->tgl_kegiatan = $request->get('tgl_kegiatan');
-
-        $kegiatan->save();
-
-
-
-        return response()->json(compact('kegiatan'));
+        // $kegiatan->nama_kegiatan = $request->get('nama_kegiatan');
+        // $kegiatan->tempat_kegiatan = $request->get('tempat_kegiatan');
+        // $kegiatan->tgl_kegiatan = $request->get('tgl_kegiatan');
+        // $kegiatan->save();
+       // return response()->json(compact('kegiatan'));
+       $data = DB::table('kegiatans')->where('id_kegiatan', $id_kegiatan)->update([
+        'nama_kegiatan'=>$request->nama_kegiatan,
+        'tgl_kegiatan'=>$request->tgl_kegiatan,
+         'tempat_kegiatan'=>$request->tempat_kegiatan,
+        
+    ]);
+    return response()->json([
+        'nama_kegiatan'=>$request->nama_kegiatan,
+        'tgl_kegiatan'=>$request->tgl_kegiatan,
+         'tempat_kegiatan'=>$request->tempat_kegiatan,
+        
+    ],200);
     }
-    public function delete($id){
-        $kegiatan= kegiatan::find($id);
-        $kegiatan->delete();
+    public function delete($id_kegiatan){
+        $blog = DB::table('kegiatans')->where('id_kegiatan',$id_kegiatan)->delete();
 
-        return"data berhasil dihapus";
+        return "data berhasil dihapus";
     }
     /**
      * Remove the specified resource from storage.

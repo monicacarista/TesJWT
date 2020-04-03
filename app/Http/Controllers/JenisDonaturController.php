@@ -81,10 +81,6 @@ class JenisDonaturController extends Controller
             'nama_jenis_donatur'=>$request->nama_jenis_donatur,
             
         ],200);
-
-
-
-        return response()->json(compact('jenis_donatur'));
     }
     public function delete($id_jenis_donatur){
         $jenis_donatur= jenis_donatur::find($id_jenis_donatur);

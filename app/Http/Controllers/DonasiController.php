@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Donasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class DonasiController extends Controller
@@ -28,9 +29,9 @@ class DonasiController extends Controller
         $donasi = new Donasi;
      
         // $donasi ->id_donasi = $request->id_donasi;
-        // $donasi ->id_jenis_donasi = $request->id_jenis_donasi;
-        // $donasi ->id_donatur= $request->id_donatur;
-        // $donasi ->id_kegiatan= $request->id_kegiatan;
+        $donasi ->id_jenis_donasi = $request->id_jenis_donasi;
+        $donasi ->id_donatur= $request->id_donatur;
+        $donasi ->id_kegiatan= $request->id_kegiatan;
         $donasi ->tgl_donasi = $request->tgl_donasi;
         $donasi ->nominal = $request->nominal;
         $donasi->save();
@@ -80,27 +81,35 @@ class DonasiController extends Controller
      * @param  \App\donasi  $donasi
      * @return \Illuminate\Http\Response
      */
-    public function update(request $request, $id)
+    public function update(request $request, $id_donasi)
     {
-     //$jenis_donatur->id_jenis_donatur=$request->id_jenis_donatur;
-     $donasi= Donasi::find($id);
+    
+    // $donasi= Donasi::find($id);
     //  $donasi->id_donasi = $id_donasi;
     //  $donasi->id_jenis_donasi = $id_jenis_donasi;
     //  $donasi->id_donatur = $id_donatur;
     //  $donasi->id_kegiatan = $id_kegiatan;
-     $donasi->tgl_donasi = $tgl_donasi;
-     $donasi->nominal = $nominal;
-     $donasi->save();
+    //  $donasi->tgl_donasi = $tgl_donasi;
+    //  $donasi->nominal = $nominal;
+    //  $donasi->save();
 
-     return response()->json(compact('donasi'));
-
+    //  return response()->json(compact('donasi'));
+    $data = DB::table('donasis')->where('id_donasi', $id_donasi)->update([
+        'tgl_donasi'=>$request->tgl_donasi,
+        'nominal'=>$request->nominal,
+      
+    ]);
+    return response()->json([
+       // 'id_kegiatan'=>$request->id_kegiatan,
+        'tgl_donasi'=>$request->tgl_donasi,
+        'nominal'=>$request->nominal,
+    ],200);
     }
 
-    public function delete( $id){
-        $donasi=Donasi::find($id);
-        $donasi->delete();
-   
-        return "data berhasil dihapus";
+    public function delete( $id_donasi){
+        $blog = DB::table('donasis')->where('id_donasi',$id_donasi)->delete();
+
+    return "data berhasil dihapus";
        }
 
 
