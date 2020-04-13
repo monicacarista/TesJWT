@@ -25,11 +25,13 @@ class JenisDonaturController extends Controller
      */
     public function create(request $request)
     {
-        $jenis_donatur= new jenis_donatur;
-       
-        $jenis_donatur->nama_jenis_donatur=$request->nama_jenis_donatur;
-        $jenis_donatur->save();
-        return response()->json(compact('jenis_donatur'));
+        DB::table('jenis_donaturs')->insert([
+            'id_jenis_donatur'=>$request->input('id_jenis_donatur'),
+            'nama_jenis_donatur'=>$request->input('nama_jenis_donatur'),
+        ]);
+        return response()->json([
+            'id_jenis_donatur'=>$request->id_jenis_donatur,
+            'nama_jenis_donatur'=>$request->nama_jenis_donatur],200);
     }
 
     /**
@@ -83,10 +85,9 @@ class JenisDonaturController extends Controller
         ],200);
     }
     public function delete($id_jenis_donatur){
-        $jenis_donatur= jenis_donatur::find($id_jenis_donatur);
-        $jenis_donatur->delete();
+        $blog = DB::table('jenis_donaturs')->where('id_jenis_donatur',$id_jenis_donatur)->delete();
 
-        return"data berhasil dihapus";
+    return "data berhasil dihapus";
     }
     /**
      * Remove the specified resource from storage.

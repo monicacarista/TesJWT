@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\donatur;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 
 class DonaturController extends Controller
 {
@@ -16,6 +18,7 @@ class DonaturController extends Controller
     public function index()
     {
         return Donatur::all();
+        //$donatur = DB::select('select * from donaturs');
     }
 
     /**
@@ -25,17 +28,26 @@ class DonaturController extends Controller
      */
     public function create(request $request)
     {
-        $donatur = new Donatur;
-        $donatur->nama_donatur = $request->nama_donatur;
-        $donatur->jenis_kelamin = $request->jenis_kelamin;
-        $donatur->no_hp = $request->no_hp;
-        $donatur->alamat_donatur = $request->alamat_donatur;
-        $donatur->email_donatur = $request->email_donatur;
         
-        $donatur->save();
-
-        // return "Data Berhasil Masuk";
-        return response()->json(compact('donatur'));      //utk 1 variabel
+        $id_jenis_donatur = DB::table('jenis_donaturs')->pluck("id_jenis_donatur");
+       
+            DB::table('donaturs')->insert([
+            'id_jenis_donatur'=>$request->input('id_jenis_donatur'),
+            'nama_donatur'=>$request->input('nama_donatur'),
+            'jenis_kelamin'=>$request->input('jenis_kelamin'),
+            'no_hp'=>$request->input('no_hp'),
+            'alamat_donatur'=>$request->input('alamat_donatur'),
+            'email_donatur'=>$request->input('email_donatur')
+           
+        ]);
+        return response()->json([
+            'nama_donatur'=>$request->nama_donatur,
+            'jenis_kelamin'=>$request->jenis_kelamin,
+            'no_hp'=>$request->no_hp,
+            'id_jenis_donatur'=>$request->id_jenis_donatur,
+             'alamat_donatur'=>$request->alamat_donatur,
+             'email_donatur'=>$request->email_donatur,
+        ],200);
     }
 
     /**
@@ -80,15 +92,7 @@ class DonaturController extends Controller
      */
     public function update(Request $request, $id_donatur)
     {
-        // $donatur = Donatur::find($id_donatur);
-        // $donatur->nama_donatur=$request->get('nama_donatur');
-        // $donatur->jenis_kelamin=$request->get('jenis_kelamin');
-        // $donatur->no_hp=$request->get('no_hp');
-        // $donatur->alamat_donatur=$request->get('alamat_donatur');
-        // $donatur->email_donatur=$request->get('email_donatur');
-        // $donatur->save(); 
-
-        // return response()->json(compact('donatur'));
+       
         $data = DB::table('donaturs')->where('id_donatur', $id_donatur)->update([
             'nama_donatur'=>$request->nama_donatur,
             'jenis_kelamin'=>$request->jenis_kelamin,
@@ -119,4 +123,13 @@ class DonaturController extends Controller
     {
         //
     }
+    
+    //  public function getJenisDonatur()
+    //      {
+    //         $hasil= DB::table('jenis_donaturs')->pluck("nama_jenis_donatur");
+    //         foreach ($hasil as $hasil) {
+    //             echo $hasil;
+    //         }
+    //         return view('lihatdata',['liat'=>$hasil]);
+    //      }
 }

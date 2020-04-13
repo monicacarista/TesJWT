@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('lihatdata','DonaturController@getJenisDonatur');
+//Route::get('tesdropdownlist/getdonaturs/{id}','DataController@getDonaturs');
+
+
 Route::get('/', function () {
     return view('welcome');
 });

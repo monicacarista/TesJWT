@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
     Route::middleware('jwt.auth')->group(function(){
         Route::get('logout', 'UserController@logout');
     });    
-//route CRUD Peserta
+//route CRUD Donatur
 Route::get('/donatur','DonaturController@index');
 Route::post('/postdonatur','DonaturController@create');
 Route::post('/donatur/{id_donatur}','DonaturController@update');
@@ -60,3 +60,6 @@ Route::get('/detail_kegiatan','DetailKegiatanController@index');
 Route::post('/postdetail_kegiatan','DetailKegiatanController@create');
 Route::post('/detail_kegiatan/{id}','DetailKegiatanController@update');
 Route::delete('/detail_kegiatan/{id}','DetailKegiatanController@delete');
+
+//route get donatur
+Route::get('/getdonatur','DonaturController@getDonatur');

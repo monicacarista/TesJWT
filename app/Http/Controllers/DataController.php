@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 class DataController extends Controller
 {
@@ -18,4 +19,7 @@ class DataController extends Controller
         $data = "Only authorized users can see this";
         return response()->json(compact('data'),200);
     }
+
+
+        
 }

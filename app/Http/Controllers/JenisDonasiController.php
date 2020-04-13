@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\jenis_donasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class JenisDonasiController extends Controller
 {
@@ -24,11 +25,13 @@ class JenisDonasiController extends Controller
      */
     public function create(request $request)
     {
-        $jenis_donasi= new jenis_donasi;
-       
-        $jenis_donasi->nama_jenis_donasi=$request->nama_jenis_donasi;
-        $jenis_donasi->save();
-        return response()->json(compact('jenis_donasi'));
+        DB::table('jenis_donasis')->insert([
+            'id_jenis_donasi'=>$request->input('id_jenis_donasi'),
+            'nama_jenis_donasi'=>$request->input('nama_jenis_donasi'),
+        ]);
+        return response()->json([
+            'id_jenis_donasi'=>$request->id_jenis_donasi,
+            'nama_jenis_donasi'=>$request->nama_jenis_donasi],200);
     }
 
     /**
@@ -80,6 +83,11 @@ class JenisDonasiController extends Controller
             'nama_jenis_donasi'=>$request->nama_jenis_donasi,
             
         ],200);
+    }
+    public function delete($id_jenis_donasi){
+        $blog = DB::table('jenis_donasis')->where('id_jenis_donasi',$id_jenis_donasi)->delete();
+
+    return "data berhasil dihapus";
     }
 
     /**

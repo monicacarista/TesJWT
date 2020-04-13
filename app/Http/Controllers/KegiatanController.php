@@ -25,16 +25,26 @@ class KegiatanController extends Controller
      */
     public function create(request $request)
     {
-        $kegiatan= new kegiatan;
-        // $kegiatan->id_kegiatan=$request->id_kegiatan;
-        // $kegiatan->id_donasi=$request->id_donasi;
-        // $kegiatan->id_donatur=$request->id_donatur;
-        $kegiatan->tempat_kegiatan=$request->tempat_kegiatan;
-        $kegiatan->nama_kegiatan=$request->nama_kegiatan;
-        $kegiatan->tgl_kegiatan=$request->tgl_kegiatan;
 
-        $kegiatan->save();
-        return response()->json(compact('kegiatan'));
+
+        $id_donasi = DB::table('donasis')->pluck("id_donasi");
+        $id_donatur = DB::table('donaturs')->pluck("id_donatur");
+        DB::table('kegiatans')->insert([
+            'id_donasi'=>$request->input('id_donasi'),
+            'id_donatur'=>$request->input('id_donatur'),
+            'nama_kegiatan'=>$request->input('nama_kegiatan'),
+            'tempat_kegiatan'=>$request->input('tempat_kegiatan'),
+            'tgl_kegiatan'=>$request->input('tgl_kegiatan')
+           
+        ]);
+        return response()->json([
+            'id_donasi'=>$request->id_donasi,
+            'id_donatur'=>$request->id_donatur,
+            'nama_kegiatan'=>$request->nama_kegiatan,
+            'tempat_kegiatan'=>$request->tempat_kegiatan,
+             'tgl_kegiatan'=>$request->tgl_kegiatan
+        ],200);
+       
     }
 
     /**
@@ -93,13 +103,14 @@ class KegiatanController extends Controller
         'nama_kegiatan'=>$request->nama_kegiatan,
         'tgl_kegiatan'=>$request->tgl_kegiatan,
          'tempat_kegiatan'=>$request->tempat_kegiatan,
+         
         
     ]);
     return response()->json([
         'nama_kegiatan'=>$request->nama_kegiatan,
         'tgl_kegiatan'=>$request->tgl_kegiatan,
          'tempat_kegiatan'=>$request->tempat_kegiatan,
-        
+             
     ],200);
     }
     public function delete($id_kegiatan){

@@ -26,19 +26,29 @@ class DonasiController extends Controller
      */
     public function create(request $request)
     {
-        $donasi = new Donasi;
-     
-        // $donasi ->id_donasi = $request->id_donasi;
-        $donasi ->id_jenis_donasi = $request->id_jenis_donasi;
-        $donasi ->id_donatur= $request->id_donatur;
-        $donasi ->id_kegiatan= $request->id_kegiatan;
-        $donasi ->tgl_donasi = $request->tgl_donasi;
-        $donasi ->nominal = $request->nominal;
-        $donasi->save();
 
-        // return "Data Berhasil Masuk";
-        return response()->json(compact('donasi'));      //utk 1 variabel
+        $id_jenis_donasi = DB::table('jenis_donasis')->pluck("id_jenis_donasi");
+        $id_donatur = DB::table('donaturs')->pluck("id_donatur");
+        $id_kegiatan = DB::table('kegiatans')->pluck("id_kegiatan");
+        
+       
+        DB::table('donasis')->insert([
+            'id_jenis_donasi'=>$request->input('id_jenis_donasi'),
+            'id_donatur'=>$request->input('id_donatur'),
+            'id_kegiatan'=>$request->input('id_kegiatan'),
+            'tgl_donasi'=>$request->input('tgl_donasi'),
+            'nominal'=>$request->input('nominal')
 
+           
+        ]);
+        return response()->json([
+            'id_jenis_donatur'=>$request->id_jenis_donatur,
+            'id_donatur'=>$request->id_donatur,
+            'id_kegiatan'=>$request->id_kegiatan,
+            'tgl_donasi'=>$request->tgl_donasi,
+             'nominal'=>$request->nominal,
+             
+        ],200);
     }
 
     /**
