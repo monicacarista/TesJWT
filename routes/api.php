@@ -62,4 +62,4 @@ Route::post('/detail_kegiatan/{id}','DetailKegiatanController@update');
 Route::delete('/detail_kegiatan/{id}','DetailKegiatanController@delete');
 
 //route get donatur
-Route::get('/getdonatur','DonaturController@getDonatur');
+Route::get('/getJenisDonatur','DonaturController@getJenisDonatur');

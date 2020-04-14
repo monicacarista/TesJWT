@@ -15,7 +15,14 @@ class KegiatanController extends Controller
      */
     public function index()
     {
-        return kegiatan::all();
+      
+        $id_donatur = DB::table('donaturs')->pluck("id_donatur");
+        $kegiatans = DB::table('kegiatans')
+        ->join('donaturs', 'donaturs.id_donatur', '=', 'kegiatans.id_donatur')
+        ->select('kegiatans.*', 'donaturs.nama_donatur')
+        ->get();
+          
+        return response()->json(compact('kegiatans'),200);
     }
 
     /**

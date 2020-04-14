@@ -17,8 +17,14 @@ class DonaturController extends Controller
      */
     public function index()
     {
-        return Donatur::all();
-        //$donatur = DB::select('select * from donaturs');
+        $id_jenis_donatur = DB::table('jenis_donaturs')->pluck("id_jenis_donatur");
+        $nama_jenis_donatur = DB::table('jenis_donaturs')->pluck("nama_jenis_donatur");
+        $donaturs = DB::table('donaturs')
+        ->join('jenis_donaturs', 'donaturs.id_jenis_donatur', '=', 'jenis_donaturs.id_jenis_donatur')
+        ->select('donaturs.*', 'jenis_donaturs.nama_jenis_donatur')
+        ->get();
+          
+        return response()->json(compact('donaturs'),200);
     }
 
     /**
@@ -124,12 +130,13 @@ class DonaturController extends Controller
         //
     }
     
-    //  public function getJenisDonatur()
-    //      {
-    //         $hasil= DB::table('jenis_donaturs')->pluck("nama_jenis_donatur");
-    //         foreach ($hasil as $hasil) {
-    //             echo $hasil;
-    //         }
-    //         return view('lihatdata',['liat'=>$hasil]);
-    //      }
+     public function getJenisDonatur()
+         {
+            $hasil= DB::table('jenis_donaturs')->pluck("nama_jenis_donatur");
+            foreach ($hasil as $hasil) {
+                echo $hasil;
+            }
+           // return view('lihatdata',['liat'=>$hasil]);
+           return response()->json(compact('jenis_donaturs'));
+         }
 }
