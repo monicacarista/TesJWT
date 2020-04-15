@@ -16,9 +16,6 @@ class CreateKegiatansTable extends Migration
         Schema::create('kegiatans', function (Blueprint $table) {
            
             $table->bigIncrements('id_kegiatan');
-            //$table->bigInteger('id_jenis_donatur')->references('id_jenis_donatur')->on('jenis_donaturs');
-            $table->bigInteger('id_donasi')->references('id_donasi')->on('donasis');
-            $table->bigInteger('id_donatur')->references('id_donatur')->on('donaturs');
             $table->string('nama_kegiatan');
             $table->string('tempat_kegiatan');
             $table->date('tgl_kegiatan');

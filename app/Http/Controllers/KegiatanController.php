@@ -16,13 +16,8 @@ class KegiatanController extends Controller
     public function index()
     {
       
-        $id_donatur = DB::table('donaturs')->pluck("id_donatur");
-        $kegiatans = DB::table('kegiatans')
-        ->join('donaturs', 'donaturs.id_donatur', '=', 'kegiatans.id_donatur')
-        ->select('kegiatans.*', 'donaturs.nama_donatur')
-        ->get();
-          
-        return response()->json(compact('kegiatans'),200);
+        return kegiatans::all();
+        
     }
 
     /**
@@ -33,20 +28,13 @@ class KegiatanController extends Controller
     public function create(request $request)
     {
 
-
-        $id_donasi = DB::table('donasis')->pluck("id_donasi");
-        $id_donatur = DB::table('donaturs')->pluck("id_donatur");
         DB::table('kegiatans')->insert([
-            'id_donasi'=>$request->input('id_donasi'),
-            'id_donatur'=>$request->input('id_donatur'),
             'nama_kegiatan'=>$request->input('nama_kegiatan'),
             'tempat_kegiatan'=>$request->input('tempat_kegiatan'),
             'tgl_kegiatan'=>$request->input('tgl_kegiatan')
            
         ]);
         return response()->json([
-            'id_donasi'=>$request->id_donasi,
-            'id_donatur'=>$request->id_donatur,
             'nama_kegiatan'=>$request->nama_kegiatan,
             'tempat_kegiatan'=>$request->tempat_kegiatan,
              'tgl_kegiatan'=>$request->tgl_kegiatan
@@ -98,8 +86,7 @@ class KegiatanController extends Controller
     {
         
        $data = DB::table('kegiatans')->where('id_kegiatan', $id_kegiatan)->update([
-        'id_donasi'=>$request->id_donasi,
-        'id_donatur'=>$request->id_donatur,
+      
         'nama_kegiatan'=>$request->nama_kegiatan,
         'tgl_kegiatan'=>$request->tgl_kegiatan,
          'tempat_kegiatan'=>$request->tempat_kegiatan,
@@ -107,8 +94,6 @@ class KegiatanController extends Controller
         
     ]);
     return response()->json([
-        'id_donasi'=>$request->id_donasi,
-        'id_donatur'=>$request->id_donatur,
         'nama_kegiatan'=>$request->nama_kegiatan,
         'tgl_kegiatan'=>$request->tgl_kegiatan,
          'tempat_kegiatan'=>$request->tempat_kegiatan,

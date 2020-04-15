@@ -15,7 +15,7 @@ class CreateDonatursTable extends Migration
     {
         Schema::create('donaturs', function (Blueprint $table) {
             $table->bigIncrements('id_donatur');
-            $table->bigInteger('id_jenis_donatur')->references('id_jenis_donatur')->on('jenis_donaturs');
+            $table->bigInteger('id_jenis_donatur')->references('id_jenis_donatur')->on('jenis_donaturs')->onDelete('restrict');
             $table->string('nama_donatur');
             $table->string('jenis_kelamin');
             $table->string('no_hp');
