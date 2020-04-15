@@ -100,6 +100,7 @@ class DonaturController extends Controller
     {
        
         $data = DB::table('donaturs')->where('id_donatur', $id_donatur)->update([
+            'id_jenis_donatur'=>$request->id_jenis_donatur,
             'nama_donatur'=>$request->nama_donatur,
             'jenis_kelamin'=>$request->jenis_kelamin,
             'no_hp'=>$request->no_hp,
@@ -107,6 +108,7 @@ class DonaturController extends Controller
              'email_donatur'=>$request->email_donatur,
         ]);
         return response()->json([
+            'id_jenis_donatur'=>$request->id_jenis_donatur,
             'nama_donatur'=>$request->nama_donatur,
             'jenis_kelamin'=>$request->jenis_kelamin,
             'no_hp'=>$request->no_hp,

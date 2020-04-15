@@ -97,16 +97,9 @@ class KegiatanController extends Controller
     public function update(request $request, $id_kegiatan)
     {
         
-        //$kegiatan= kegiatan::find($id);
-        // $kegiatan->id_kegiatan = $request->get('id_kegiatan');
-        // $kegiatan->id_donasi = $request->get('id_donasi');
-        // $kegiatan->id_donatur = $request->get('id_donatur');
-        // $kegiatan->nama_kegiatan = $request->get('nama_kegiatan');
-        // $kegiatan->tempat_kegiatan = $request->get('tempat_kegiatan');
-        // $kegiatan->tgl_kegiatan = $request->get('tgl_kegiatan');
-        // $kegiatan->save();
-       // return response()->json(compact('kegiatan'));
        $data = DB::table('kegiatans')->where('id_kegiatan', $id_kegiatan)->update([
+        'id_donasi'=>$request->id_donasi,
+        'id_donatur'=>$request->id_donatur,
         'nama_kegiatan'=>$request->nama_kegiatan,
         'tgl_kegiatan'=>$request->tgl_kegiatan,
          'tempat_kegiatan'=>$request->tempat_kegiatan,
@@ -114,6 +107,8 @@ class KegiatanController extends Controller
         
     ]);
     return response()->json([
+        'id_donasi'=>$request->id_donasi,
+        'id_donatur'=>$request->id_donatur,
         'nama_kegiatan'=>$request->nama_kegiatan,
         'tgl_kegiatan'=>$request->tgl_kegiatan,
          'tempat_kegiatan'=>$request->tempat_kegiatan,

@@ -116,12 +116,17 @@ class DonasiController extends Controller
 
     //  return response()->json(compact('donasi'));
     $data = DB::table('donasis')->where('id_donasi', $id_donasi)->update([
+        'id_jenis_donasi'=>$request->id_jenis_donasi,
+        'id_donatur'=>$request->id_donatur,
+        'id_kegiatan'=>$request->id_kegiatan,
         'tgl_donasi'=>$request->tgl_donasi,
         'nominal'=>$request->nominal,
       
     ]);
     return response()->json([
-       // 'id_kegiatan'=>$request->id_kegiatan,
+        'id_jenis_donasi'=>$request->id_jenis_donasi,
+        'id_donatur'=>$request->id_donatur,
+       'id_kegiatan'=>$request->id_kegiatan,
         'tgl_donasi'=>$request->tgl_donasi,
         'nominal'=>$request->nominal,
     ],200);
