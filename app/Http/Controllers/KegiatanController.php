@@ -16,7 +16,7 @@ class KegiatanController extends Controller
     public function index()
     {
       
-        return kegiatans::all();
+        return kegiatan::all();
         
     }
 
