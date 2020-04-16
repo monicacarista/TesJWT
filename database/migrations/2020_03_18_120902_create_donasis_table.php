@@ -20,6 +20,7 @@ class CreateDonasisTable extends Migration
             $table->bigInteger('id_donatur')->references('id_donatur')->on('donaturs');
             $table->bigInteger('id_kegiatan')->references('id_kegiatan')->on('kegiatans');
             $table->date('tgl_donasi');
+            $table->integer('nilai_taksir');
             $table->integer('nominal');
             $table->timestamps();
         });

@@ -50,6 +50,7 @@ class DonasiController extends Controller
             'id_donatur'=>$request->input('id_donatur'),
             'id_kegiatan'=>$request->input('id_kegiatan'),
             'tgl_donasi'=>$request->input('tgl_donasi'),
+            'nilai_taksir'=>$request->input('nilai_taksir'),
             'nominal'=>$request->input('nominal')
 
            
@@ -59,6 +60,7 @@ class DonasiController extends Controller
             'id_donatur'=>$request->id_donatur,
             'id_kegiatan'=>$request->id_kegiatan,
             'tgl_donasi'=>$request->tgl_donasi,
+            'nilai_taksir'=>$request->input('nilai_taksir'),
              'nominal'=>$request->nominal,
              
         ],200);
@@ -122,6 +124,7 @@ class DonasiController extends Controller
         'id_donatur'=>$request->id_donatur,
         'id_kegiatan'=>$request->id_kegiatan,
         'tgl_donasi'=>$request->tgl_donasi,
+        'nilai_taksir'=>$request->nilai_taksir,
         'nominal'=>$request->nominal,
       
     ]);
@@ -130,6 +133,7 @@ class DonasiController extends Controller
         'id_donatur'=>$request->id_donatur,
        'id_kegiatan'=>$request->id_kegiatan,
         'tgl_donasi'=>$request->tgl_donasi,
+        'nilai_taksir'=>$request->nilai_taksir,
         'nominal'=>$request->nominal,
     ],200);
     }
