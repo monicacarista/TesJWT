@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Donasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 
 
 class DonasiController extends Controller
@@ -16,18 +17,19 @@ class DonasiController extends Controller
      */
     public function index()
     {
-        $id_jenis_donasi = DB::table('jenis_donasis')->pluck("id_jenis_donasi");
-        $id_donatur = DB::table('donaturs')->pluck("id_donatur");
-        $id_kegiatan = DB::table('kegiatans')->pluck("id_kegiatan");
+        // $id_jenis_donasi = DB::table('jenis_donasis')->pluck("id_jenis_donasi");
+        // $id_donatur = DB::table('donaturs')->pluck("id_donatur");
+        // $id_kegiatan = DB::table('kegiatans')->pluck("id_kegiatan");
         
         $donasis = DB::table('donasis')
         ->join('jenis_donasis', 'donasis.id_jenis_donasi', '=', 'jenis_donasis.id_jenis_donasi')
         ->join('donaturs', 'donasis.id_donatur', '=', 'donaturs.id_donatur')
         ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
-        ->select('kegiatans.*', 'donaturs.nama_donatur','kegiatans.nama_kegiatan','jenis_donasis.nama_jenis_donasi')
+        ->select('donasis.*', 'donaturs.nama_donatur','jenis_donasis.nama_jenis_donasi')
         ->get();
-          
+        
         return response()->json(compact('donasis'),200);
+        
     }
 
     /**

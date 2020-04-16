@@ -24,7 +24,13 @@ class DonaturController extends Controller
         ->select('donaturs.*', 'jenis_donaturs.nama_jenis_donatur')
         ->get();
           
-        return response()->json(compact('donaturs'),200);
+        return response()->json($donaturs);
+        // DB::table('donaturs')
+        // ->join('jenis_donaturs', function ($join) {
+        //     $join->on('donaturs.id_jenis_donatur', '=', 'jenis_donaturs.id_jenis_donatur')
+        //     ->select('donaturs.*', 'jenis_donaturs.nama_jenis_donatur');
+        // })
+        // ->get();
     }
 
     /**
