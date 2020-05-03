@@ -33,22 +33,25 @@ class DonasiController extends Controller
         
     }
 
-    public function laporan()
+    public function laporanGrafik()
     {
-        // $donasis = DB::table('donasis')
-        // ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
-        // ->select('donasis.id_kegiatan', DB::raw('MAX(kegiatans.id_kegiatan) as jumlah_donasi'), 'kegiatans.nama_kegiatan')
-        // ->take(10)
-        // ->groupBy('donasis.id_kegiatan','nama_kegiatan')
-        // ->get();
-       // $dogs = Dogs::orderBy('id', 'desc')->take(5)->get();
-       
         $donasis = DB::table('donasis')
                 ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
                 ->select('donasis.id_kegiatan', DB::raw('SUM(nominal) as jumlah_donasi'), 'kegiatans.nama_kegiatan')
                 ->orderBy('kegiatans.tgl_kegiatan','desc')
-                ->take(3)
+                ->take(10)
                 ->groupBy('donasis.id_kegiatan','nama_kegiatan')
+                ->get();
+
+        return response()->json(compact('donasis'),200);
+        
+    }
+    public function laporanSemuaKegiatan()
+    {
+        $donasis = DB::table('donasis')
+                ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
+                ->select('kegiatans.id_kegiatan', DB::raw('SUM(nominal) as jumlah_donasi'), 'kegiatans.nama_kegiatan', 'kegiatans.tempat_kegiatan','kegiatans.tgl_kegiatan')
+                ->groupBy('kegiatans.id_kegiatan','nama_kegiatan','tempat_kegiatan','tgl_kegiatan')
                 ->get();
 
         return response()->json(compact('donasis'),200);

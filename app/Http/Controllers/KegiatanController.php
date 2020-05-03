@@ -19,6 +19,8 @@ class KegiatanController extends Controller
         return kegiatan::all();
         
     }
+ 
+
 
     /**
      * Show the form for creating a new resource.
