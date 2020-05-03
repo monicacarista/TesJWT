@@ -26,8 +26,31 @@ class DonasiController extends Controller
         ->join('donaturs', 'donasis.id_donatur', '=', 'donaturs.id_donatur')
         ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
         ->select('donasis.*', 'donaturs.nama_donatur','jenis_donasis.nama_jenis_donasi')
+        ->LIMIT(2)
         ->get();
         
+        return response()->json(compact('donasis'),200);
+        
+    }
+
+    public function laporan()
+    {
+        // $donasis = DB::table('donasis')
+        // ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
+        // ->select('donasis.id_kegiatan', DB::raw('MAX(kegiatans.id_kegiatan) as jumlah_donasi'), 'kegiatans.nama_kegiatan')
+        // ->take(10)
+        // ->groupBy('donasis.id_kegiatan','nama_kegiatan')
+        // ->get();
+       // $dogs = Dogs::orderBy('id', 'desc')->take(5)->get();
+       
+        $donasis = DB::table('donasis')
+                ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
+                ->select('donasis.id_kegiatan', DB::raw('SUM(nominal) as jumlah_donasi'), 'kegiatans.nama_kegiatan')
+                ->orderBy('kegiatans.tgl_kegiatan','desc')
+                ->take(3)
+                ->groupBy('donasis.id_kegiatan','nama_kegiatan')
+                ->get();
+
         return response()->json(compact('donasis'),200);
         
     }

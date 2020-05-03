@@ -32,6 +32,7 @@ Route::delete('/donatur/{id}','DonaturController@delete');
 
 //route CRUD Donasi
 Route::get('/donasi','DonasiController@index');
+Route::get('/donasilaporan','DonasiController@laporan');
 Route::post('/postdonasi','DonasiController@create');
 Route::post('/donasi/{id}','DonasiController@update');
 Route::delete('/donasi/{id}','DonasiController@delete');
