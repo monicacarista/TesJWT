@@ -26,7 +26,7 @@ class DonasiController extends Controller
         ->join('donaturs', 'donasis.id_donatur', '=', 'donaturs.id_donatur')
         ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
         ->select('donasis.*', 'donaturs.nama_donatur','jenis_donasis.nama_jenis_donasi')
-        ->LIMIT(2)
+        
         ->get();
         
         return response()->json(compact('donasis'),200);
@@ -37,7 +37,7 @@ class DonasiController extends Controller
     {
         $donasis = DB::table('donasis')
                 ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
-                ->select('donasis.id_kegiatan', DB::raw('SUM(nominal) as jumlah_donasi'), 'kegiatans.nama_kegiatan')
+                ->select('donasis.id_kegiatan', DB::raw('SUM(nilai_taksir) as jumlah_donasi'), 'kegiatans.nama_kegiatan')
                 ->orderBy('kegiatans.tgl_kegiatan','desc')
                 ->take(10)
                 ->groupBy('donasis.id_kegiatan','nama_kegiatan')
@@ -50,10 +50,24 @@ class DonasiController extends Controller
     {
         $donasis = DB::table('donasis')
                 ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
-                ->select('kegiatans.id_kegiatan', DB::raw('SUM(nominal) as jumlah_donasi'), 'kegiatans.nama_kegiatan', 'kegiatans.tempat_kegiatan','kegiatans.tgl_kegiatan')
+                ->select('kegiatans.id_kegiatan', DB::raw('SUM(nilai_taksir) as jumlah_donasi'), 'kegiatans.nama_kegiatan', 'kegiatans.tempat_kegiatan','kegiatans.tgl_kegiatan')
                 ->groupBy('kegiatans.id_kegiatan','nama_kegiatan','tempat_kegiatan','tgl_kegiatan')
                 ->get();
+             
 
+        return response()->json(compact('donasis'),200);
+        
+    }
+    
+    public function laporanKegiatan($id_kegiatan)
+    {
+        $nilai_taksir = DB::table('donasis')->pluck("nilai_taksir");
+        $donasis = DB::table('donasis')
+                ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
+                ->join('donaturs', 'donasis.id_donatur', '=', 'donaturs.id_donatur')
+                ->select('donaturs.id_donatur', DB::raw('SUM(nilai_taksir) as jumlah_donasi_donatur'),'nama_donatur')
+                ->groupBy('donaturs.id_donatur','nama_donatur')
+                ->get();
         return response()->json(compact('donasis'),200);
         
     }
@@ -77,6 +91,7 @@ class DonasiController extends Controller
             'id_kegiatan'=>$request->input('id_kegiatan'),
             'tgl_donasi'=>$request->input('tgl_donasi'),
             'nilai_taksir'=>$request->input('nilai_taksir'),
+            'keterangan'=>$request->input('keterangan'),
             'nominal'=>$request->input('nominal')
 
            
@@ -86,7 +101,8 @@ class DonasiController extends Controller
             'id_donatur'=>$request->id_donatur,
             'id_kegiatan'=>$request->id_kegiatan,
             'tgl_donasi'=>$request->tgl_donasi,
-            'nilai_taksir'=>$request->input('nilai_taksir'),
+            'nilai_taksir'=>$request->nilai_taksir,
+            'keterangan'=>$request->keterangan,
              'nominal'=>$request->nominal,
              
         ],200);
@@ -151,6 +167,7 @@ class DonasiController extends Controller
         'id_kegiatan'=>$request->id_kegiatan,
         'tgl_donasi'=>$request->tgl_donasi,
         'nilai_taksir'=>$request->nilai_taksir,
+        'keterangan'=>$request->keterangan,
         'nominal'=>$request->nominal,
       
     ]);
@@ -160,6 +177,7 @@ class DonasiController extends Controller
        'id_kegiatan'=>$request->id_kegiatan,
         'tgl_donasi'=>$request->tgl_donasi,
         'nilai_taksir'=>$request->nilai_taksir,
+        'keterangan'=>$request->keterangan,
         'nominal'=>$request->nominal,
     ],200);
     }

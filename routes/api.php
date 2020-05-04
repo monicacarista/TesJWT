@@ -33,6 +33,8 @@ Route::delete('/donatur/{id}','DonaturController@delete');
 //route CRUD Donasi
 Route::get('/donasi','DonasiController@index');
 Route::get('/donasiLaporanGrafik','DonasiController@laporanGrafik');
+Route::get('/donasiSemuaKegiatan','DonasiController@laporanSemuaKegiatan');
+Route::get('/donasiLaporanPerKegiatan/{id}','DonasiController@laporanKegiatan');
 Route::post('/postdonasi','DonasiController@create');
 Route::post('/donasi/{id}','DonasiController@update');
 Route::delete('/donasi/{id}','DonasiController@delete');
@@ -51,7 +53,7 @@ Route::delete('/jenis_donatur/{id}','JenisDonaturController@delete');
 
 //route CRUD kegiatan
 Route::get('/kegiatan','KegiatanController@index');
-Route::get('/donasiSemuaKegiatan','DonasiController@laporanSemuaKegiatan');
+
 Route::post('/postkegiatan','KegiatanController@create');
 Route::post('/kegiatan/{id}','KegiatanController@update');
 Route::delete('/kegiatan/{id}','KegiatanController@delete');
