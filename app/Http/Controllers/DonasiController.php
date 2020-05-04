@@ -61,14 +61,20 @@ class DonasiController extends Controller
     
     public function laporanKegiatan($id_kegiatan)
     {
-        $nilai_taksir = DB::table('donasis')->pluck("nilai_taksir");
+      //  $nilai_taksir = DB::table('donasis')->pluck("nilai_taksir");
         $donasis = DB::table('donasis')
                 ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
                 ->join('donaturs', 'donasis.id_donatur', '=', 'donaturs.id_donatur')
                 ->select('donaturs.id_donatur', DB::raw('SUM(nilai_taksir) as jumlah_donasi_donatur'),'nama_donatur')
                 ->groupBy('donaturs.id_donatur','nama_donatur')
                 ->get();
-        return response()->json(compact('donasis'),200);
+        $data = DB::table('donasis')
+                ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
+                ->join('donaturs', 'donasis.id_donatur', '=', 'donaturs.id_donatur')
+                ->select('donasis.id_donasi', DB::raw('SUM(nilai_taksir) as jumlah_donasi'),'nama_donatur')
+                ->groupBy('donasis.id_donasi','nama_donatur')
+                ->get();
+        return response()->json(compact('donasis','data'),200);
         
     }
 
