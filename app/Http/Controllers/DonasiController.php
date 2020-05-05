@@ -75,6 +75,18 @@ class DonasiController extends Controller
         return response()->json(compact('donasis','data'),200);
         
     }
+    public function laporanJenisDonasi()
+    {
+        $donasis = DB::table('donasis')
+                ->join('jenis_donasis', 'donasis.id_jenis_donasi', '=', 'jenis_donasis.id_jenis_donasi')
+                ->select(DB::raw('donasis.id_jenis_donasi','COUNT(donasis.id_jenis_donasi) as total_dollar'), 'jenis_donasis.nama_jenis_donasi')
+                ->groupBy('donasis.id_jenis_donasi','nama_jenis_donasi')
+                ->get();
+             
+
+        return response()->json(compact('donasis'),200);
+        
+    }
 
     /**
      * Show the form for creating a new resource.
