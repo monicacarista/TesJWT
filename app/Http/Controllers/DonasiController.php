@@ -59,20 +59,18 @@ class DonasiController extends Controller
         
     }
     
-    public function laporanKegiatan($id_kegiatan)
+    public function laporanKegiatan(request $request, $id_kegiatan)
     {
       //  $nilai_taksir = DB::table('donasis')->pluck("nilai_taksir");
-        $donasis = DB::table('donasis')
-                ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
+        $donasis = DB::table('donasis')->where('id_kegiatan', $id_kegiatan)
                 ->join('donaturs', 'donasis.id_donatur', '=', 'donaturs.id_donatur')
-                ->select('donaturs.id_donatur', DB::raw('SUM(nilai_taksir) as jumlah_donasi_donatur'),'nama_donatur')
-                ->groupBy('donaturs.id_donatur','nama_donatur')
+                ->select('donasis.id_donatur','donasis.id_kegiatan', DB::raw('SUM(nilai_taksir) as jumlah_donasi_donatur'),'nama_donatur')
+                ->groupBy('donasis.id_donatur','nama_donatur','donasis.id_kegiatan')
                 ->get();
-        $data = DB::table('donasis')
-                ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
+        $data = DB::table('donasis')->where('id_kegiatan', $id_kegiatan)
                 ->join('donaturs', 'donasis.id_donatur', '=', 'donaturs.id_donatur')
-                ->select('donasis.id_donasi', DB::raw('SUM(nilai_taksir) as jumlah_donasi'),'nama_donatur')
-                ->groupBy('donasis.id_donasi','nama_donatur')
+                ->select('donasis.id_kegiatan', DB::raw('SUM(nilai_taksir) as jumlah_donasi'))
+                ->groupBy('donasis.id_kegiatan')
                 ->get();
         return response()->json(compact('donasis','data'),200);
         
