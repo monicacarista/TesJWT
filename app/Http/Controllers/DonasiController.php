@@ -78,9 +78,10 @@ class DonasiController extends Controller
     public function laporanJenisDonasi()
     {
         $donasis = DB::table('donasis')
+                ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
                 ->join('jenis_donasis', 'donasis.id_jenis_donasi', '=', 'jenis_donasis.id_jenis_donasi')
-                ->select(DB::raw('donasis.id_jenis_donasi','COUNT(donasis.id_jenis_donasi) as total_dollar'), 'jenis_donasis.nama_jenis_donasi')
-                ->groupBy('donasis.id_jenis_donasi','nama_jenis_donasi')
+                ->select('donasis.id_kegiatan','kegiatans.nama_kegiatan', DB::raw('COUNT(donasis.id_jenis_donasi) as total_jenis_donasi'),'jenis_donasis.nama_jenis_donasi')
+                ->groupBy('donasis.id_kegiatan','jenis_donasis.nama_jenis_donasi','kegiatans.nama_kegiatan')
                 ->get();
              
 
