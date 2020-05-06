@@ -25,7 +25,7 @@ class DonasiController extends Controller
         ->join('jenis_donasis', 'donasis.id_jenis_donasi', '=', 'jenis_donasis.id_jenis_donasi')
         ->join('donaturs', 'donasis.id_donatur', '=', 'donaturs.id_donatur')
         ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
-        ->select('donasis.*', 'donaturs.nama_donatur','jenis_donasis.nama_jenis_donasi')
+        ->select('donasis.*', 'donaturs.nama_donatur','jenis_donasis.nama_jenis_donasi','nama_kegiatan')
         
         ->get();
         
