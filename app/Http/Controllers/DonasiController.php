@@ -54,18 +54,26 @@ class DonasiController extends Controller
                 ->groupBy('kegiatans.id_kegiatan','nama_kegiatan','tempat_kegiatan','tgl_kegiatan')
                 ->get();
              
+        $data = DB::table('donasis')
+            //     ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
+            // //    ->select('donasis.id_donasi', DB::raw('SUM(nilai_taksir) as jumlah_semua_donasi'))
+            //     ->where('donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
+            //     ->sum('nilai_taksir');
 
-        return response()->json(compact('donasis'),200);
+           ->get()->sum("nilai_taksir");
+        return response()->json(compact('donasis','data'),200);
         
     }
     
-    public function laporanKegiatan(request $request, $id_kegiatan)
+    public function laporanPerKegiatan(request $request, $id_kegiatan)
     {
       //  $nilai_taksir = DB::table('donasis')->pluck("nilai_taksir");
-        $donasis = DB::table('donasis')->where('id_kegiatan', $id_kegiatan)
+        $donasis = DB::table('donasis')->where('donasis.id_kegiatan', $id_kegiatan)
+            ->join('jenis_donasis', 'donasis.id_jenis_donasi', '=', 'jenis_donasis.id_jenis_donasi')
                 ->join('donaturs', 'donasis.id_donatur', '=', 'donaturs.id_donatur')
-                ->select('donasis.id_donatur','donasis.id_kegiatan', DB::raw('SUM(nilai_taksir) as jumlah_donasi_donatur'),'nama_donatur')
-                ->groupBy('donasis.id_donatur','nama_donatur','donasis.id_kegiatan')
+                ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
+                ->select('donasis.id_donatur','donasis.id_kegiatan','nama_kegiatan', DB::raw('SUM(nilai_taksir) as jumlah_donasi_donatur'),'nama_donatur','nama_jenis_donasi','keterangan')
+                ->groupBy('donasis.id_donatur','donasis.id_kegiatan','nama_donatur','nama_kegiatan','nama_jenis_donasi','keterangan')
                 ->get();
         $data = DB::table('donasis')->where('id_kegiatan', $id_kegiatan)
                 ->join('donaturs', 'donasis.id_donatur', '=', 'donaturs.id_donatur')
