@@ -81,7 +81,14 @@ class DonasiController extends Controller
                 ->select('donasis.id_kegiatan', 'nama_kegiatan',DB::raw('SUM(nilai_taksir) as jumlah_donasi'))
                 ->groupBy('donasis.id_kegiatan','nama_kegiatan')
                 ->get();
-        return response()->json(compact('donasis','data'),200);
+        $donasi = DB::table('donasis')->where('donasis.id_kegiatan', $id_kegiatan)
+                ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
+                ->join('jenis_donasis', 'donasis.id_jenis_donasi', '=', 'jenis_donasis.id_jenis_donasi')
+                ->select('donasis.id_kegiatan','kegiatans.nama_kegiatan', DB::raw('SUM(donasis.nilai_taksir) as total_jenis_donasi'),'jenis_donasis.nama_jenis_donasi')
+                ->groupBy('donasis.id_kegiatan','jenis_donasis.nama_jenis_donasi','kegiatans.nama_kegiatan')
+                ->get();
+             
+        return response()->json(compact('donasis','data','donasi'),200);
         
     }
     public function laporanJenisDonasiSemuaKegiatan()
@@ -99,13 +106,7 @@ class DonasiController extends Controller
     }
     public function laporanJenisDonasiPerKegiatan(request $request, $id_kegiatan)
     {
-        $donasis = DB::table('donasis')->where('donasis.id_kegiatan', $id_kegiatan)
-                ->join('kegiatans', 'donasis.id_kegiatan', '=', 'kegiatans.id_kegiatan')
-                ->join('jenis_donasis', 'donasis.id_jenis_donasi', '=', 'jenis_donasis.id_jenis_donasi')
-                ->select('donasis.id_kegiatan','kegiatans.nama_kegiatan', DB::raw('SUM(donasis.nilai_taksir) as total_jenis_donasi'),'jenis_donasis.nama_jenis_donasi')
-                ->groupBy('donasis.id_kegiatan','jenis_donasis.nama_jenis_donasi','kegiatans.nama_kegiatan')
-                ->get();
-             
+        
         
         return response()->json(compact('donasis'),200);
         
